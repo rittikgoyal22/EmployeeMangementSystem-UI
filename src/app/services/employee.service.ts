@@ -3,12 +3,12 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/employee';
 
-const baseUrl = 'http://localhost:8080//employee-service/v1/employee';
+const baseUrl = 'http://localhost:8080/employee-service/v1/employee';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EmployeeServiceService {
+export class EmployeeService {
 
   constructor(private http: HttpClient) { }
 
@@ -28,6 +28,7 @@ export class EmployeeServiceService {
 
   deleteEmployeeById(id:number):Observable<String>
   {
+    console.log("In Service to Delete the Employee"+`\t${baseUrl}/${id}`);
     return this.http.delete<String>(`${baseUrl}/${id}`);
   }
 
