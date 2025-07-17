@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
-import { Employee } from '../../models/employee';
+import { Employee } from '../../models/Employee';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -12,8 +13,9 @@ import { Employee } from '../../models/employee';
 })
 export class EmployeeComponent {
     employees?:Employee[];
+    str?:String;
     
-    constructor(private empService: EmployeeService)
+    constructor(private empService: EmployeeService, private router: Router)
     {
 
     }
@@ -29,9 +31,16 @@ export class EmployeeComponent {
 
     deleteEmployee(id:any):void
     {
-        console.log("Delete Button Clicked");
-        this.empService.deleteEmployeeById(id);
-        this.getAllEmployee();
+        this.empService.deleteEmployeeById(id).subscribe(data=>{this.getAllEmployee()});
+    }
 
+    updateEmployee(id:any):void
+    {
+        this.router.navigate(['/update', id]);
+    }
+
+    addEmployee():void
+    {
+        this.router.navigate(['/add']);
     }
 }

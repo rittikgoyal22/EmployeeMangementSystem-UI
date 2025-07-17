@@ -1,0 +1,24 @@
+<button (click)="goBack()">Back</button>
+  <br>
+
+<form [formGroup]="empForm" (ngSubmit)="onSubmit()">
+
+    <label for="fname">FirstName:</label>
+    <input type="text" formControlName="firstName" id="fname" />
+  <br>
+
+    <label for="lName">LastName:</label>
+    <input type="text" formControlName="lastName" id="lName" />
+  <br>
+
+    <label for="email">Email:</label>
+    <input type="email" formControlName="email" id="email" />
+  <br>
+
+    <label for="salary">Salary:</label>
+    <input type="number" formControlName="salary" id="salary" />
+  <br>
+ 
+    <button type="submit">Save</button>
+
+</form>

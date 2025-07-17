@@ -1,0 +1,26 @@
+<button (click)="goBack()">Back</button>
+  <br>
+  
+<form *ngIf="employeeForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+  <label>ID:</label>
+  <input type="text" formControlName="id" readonly />
+  <br>
+
+  <label>Name:</label>
+  <input type="text" formControlName="firstName" />
+  <br>
+
+  <label>Name:</label>
+  <input type="text" formControlName="lastName" />
+  <br>
+
+  <label>Email:</label>
+  <input type="email" formControlName="email" />
+  <br>
+
+  <label>Salary:</label>
+  <input type="number" formControlName="salary" />
+  <br>
+
+  <button type="submit">Update</button>
+</form>

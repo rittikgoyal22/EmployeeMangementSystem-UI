@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Employee } from '../models/employee';
+import { Employee } from '../models/Employee';
 
 const baseUrl = 'http://localhost:8080/employee-service/v1/employee';
 
@@ -28,11 +28,10 @@ export class EmployeeService {
 
   deleteEmployeeById(id:number):Observable<String>
   {
-    console.log("In Service to Delete the Employee"+`\t${baseUrl}/${id}`);
-    return this.http.delete<String>(`${baseUrl}/${id}`);
+    return this.http.delete(`${baseUrl}/${id}`, {responseType : 'text'});
   }
 
-  updateEmployeeById(id:number, employee:Employee):Observable<Employee>
+  updateEmployeeById(id?:number, employee?:Employee):Observable<Employee>
   {
     return this.http.patch<Employee>(`${baseUrl}/${id}`, employee);
   }
