@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/Employee';
 import { Router } from '@angular/router';
+import { DecimalPipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [],
+  imports: [DecimalPipe],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
@@ -37,10 +38,5 @@ export class EmployeeComponent {
     updateEmployee(id:any):void
     {
         this.router.navigate(['/update', id]);
-    }
-
-    addEmployee():void
-    {
-        this.router.navigate(['/add']);
     }
 }

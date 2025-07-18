@@ -1,26 +1,74 @@
-<button (click)="goBack()">Back</button>
-  <br>
-  
-<form *ngIf="employeeForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
-  <label>ID:</label>
-  <input type="text" formControlName="id" readonly />
-  <br>
+<form *ngIf="employeeForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate
+      class="container mt-5 p-5 shadow-lg rounded-4 bg-white border"
+      style="max-width: 700px;">
 
-  <label>Name:</label>
-  <input type="text" formControlName="firstName" />
-  <br>
+  <h4 class="mb-4 fw-bold text-success text-center">Update Employee Details</h4>
 
-  <label>Name:</label>
-  <input type="text" formControlName="lastName" />
-  <br>
+  <div class="row g-4">
+    <!-- ID (read-only) -->
+    <div class="col-md-6 form-floating">
+      <input type="text" id="empId" class="form-control rounded-3 bg-light shadow-sm"
+             formControlName="id" readonly placeholder="ID">
+      <label for="empId">Employee ID</label>
+    </div>
 
-  <label>Email:</label>
-  <input type="email" formControlName="email" />
-  <br>
+    <!-- First Name -->
+    <div class="col-md-6 form-floating">
+      <input type="text" id="firstName" class="form-control rounded-3 shadow-sm"
+             formControlName="firstName" placeholder="First Name"
+             [ngClass]="{'is-invalid': submitted && employeeForm.get('firstName')?.invalid}">
+      <label for="firstName">First Name</label>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('firstName')?.errors?.['required']">
+        First Name is required.
+      </div>
+    </div>
 
-  <label>Salary:</label>
-  <input type="number" formControlName="salary" />
-  <br>
+    <!-- Last Name -->
+    <div class="col-md-6 form-floating">
+      <input type="text" id="lastName" class="form-control rounded-3 shadow-sm"
+             formControlName="lastName" placeholder="Last Name"
+             [ngClass]="{'is-invalid': submitted && employeeForm.get('lastName')?.invalid}">
+      <label for="lastName">Last Name</label>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('lastName')?.errors?.['required']">
+        Last Name is required.
+      </div>
+    </div>
 
-  <button type="submit">Update</button>
+    <!-- Email -->
+    <div class="col-md-6 form-floating">
+      <input type="email" id="email" class="form-control rounded-3 shadow-sm"
+             formControlName="email" placeholder="Email"
+             [ngClass]="{'is-invalid': submitted && employeeForm.get('email')?.invalid}">
+      <label for="email">Email</label>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('email')?.errors?.['required']">
+        Email is required.
+      </div>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('email')?.errors?.['email']">
+        Enter a valid email address.
+      </div>
+    </div>
+
+    <!-- Salary -->
+    <div class="col-md-6 form-floating">
+      <input type="number" id="salary" class="form-control rounded-3 shadow-sm"
+             formControlName="salary" placeholder="Salary"
+             [ngClass]="{'is-invalid': submitted && employeeForm.get('salary')?.invalid}">
+      <label for="salary">Salary</label>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('salary')?.errors?.['required']">
+        Salary is required.
+      </div>
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('salary')?.errors?.['min']">
+        Salary must be at least ₹1000.
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-grid mt-5">
+    <button type="submit" class="btn btn-success btn-lg rounded-3 shadow-sm">
+      <i class="bi bi-arrow-repeat me-2"></i>Update Employee
+    </button>
+  </div>
+
 </form>
+

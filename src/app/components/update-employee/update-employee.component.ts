@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/Employee';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,6 +17,7 @@ export class UpdateEmployeeComponent {
   employee!: Employee;
   employeeForm!: FormGroup;
   updatedEmployee!: Employee;
+  submitted:boolean=false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,16 +36,17 @@ export class UpdateEmployeeComponent {
       this.employee = data;
 
       this.employeeForm = this.fb.group({
-        id: [this.employee.id],
-        firstName: [this.employee.firstName],
-        lastName: [this.employee.lastName],
-        email: [this.employee.email],
-        salary: [this.employee.salary],
+        id: [this.employee.id, [Validators.required]],
+        firstName: [this.employee.firstName, Validators.required],
+        lastName: [this.employee.lastName, Validators.required],
+        email: [this.employee.email, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        salary: [this.employee.salary, Validators.required],
       });
     });
   }
 
   onSubmit(): void {
+    this.submitted = true;
     if (this.employeeForm.valid) {
       this.updatedEmployee = this.employeeForm.value;
       this.empService
@@ -53,10 +55,5 @@ export class UpdateEmployeeComponent {
           this.router.navigate(['']);
         });
     }
-  }
-
-  goBack():void
-  {
-    this.router.navigate(['']);
   }
 }
