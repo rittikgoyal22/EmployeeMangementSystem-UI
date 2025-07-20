@@ -15,6 +15,7 @@ import { CommonModule } from '@angular/common';
 export class AddEmployeeComponent {
   employee!: Employee;
   empForm!: FormGroup;
+  showPassword: boolean = false;
   submitted = false;
   constructor(
     private fb: FormBuilder,
@@ -26,7 +27,8 @@ export class AddEmployeeComponent {
     this.empForm = this.fb.group({
       firstName: ['',  Validators.required],
       lastName: ['',  Validators.required],
-      email: ['',  Validators.required],
+      email: ['',  [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      password: ['',  Validators.required],
       salary: [null,  Validators.required],
     });
   }
@@ -36,11 +38,11 @@ export class AddEmployeeComponent {
     if (this.empForm.valid) {
       this.empService
         .addEmployee(this.empForm.value)
-        .subscribe((data) => this.router.navigate(['']));
+        .subscribe((data) => this.router.navigate(['employees']));
     }
   }
 
-  goBack(): void {
-    this.router.navigate(['']);
+  togglePasswordVisibility(): void {
+    this.showPassword = !this.showPassword;
   }
 }

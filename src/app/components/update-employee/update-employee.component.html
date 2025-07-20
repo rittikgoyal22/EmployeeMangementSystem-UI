@@ -1,74 +1,135 @@
-<form *ngIf="employeeForm" [formGroup]="employeeForm" (ngSubmit)="onSubmit()" novalidate
+<!-- Main form container; displayed only if employeeForm is initialized -->
+<form *ngIf="employeeForm"
+      [formGroup]="employeeForm"
+      (ngSubmit)="onSubmit()"
+      novalidate
       class="container mt-5 p-5 shadow-lg rounded-4 bg-white border"
       style="max-width: 700px;">
 
+  <!-- Heading for the form -->
   <h4 class="mb-4 fw-bold text-success text-center">Update Employee Details</h4>
 
   <div class="row g-4">
-    <!-- ID (read-only) -->
+    
+    <!-- Employee ID: read-only field, not editable by the user -->
     <div class="col-md-6 form-floating">
-      <input type="text" id="empId" class="form-control rounded-3 bg-light shadow-sm"
-             formControlName="id" readonly placeholder="ID">
+      <input type="text"
+             id="empId"
+             class="form-control rounded-3 bg-light shadow-sm"
+             formControlName="id"
+             readonly
+             placeholder="ID">
       <label for="empId">Employee ID</label>
     </div>
 
-    <!-- First Name -->
+    <!-- First Name: required validation -->
     <div class="col-md-6 form-floating">
-      <input type="text" id="firstName" class="form-control rounded-3 shadow-sm"
-             formControlName="firstName" placeholder="First Name"
+      <input type="text"
+             id="firstName"
+             class="form-control rounded-3 shadow-sm"
+             formControlName="firstName"
+             placeholder="First Name"
              [ngClass]="{'is-invalid': submitted && employeeForm.get('firstName')?.invalid}">
       <label for="firstName">First Name</label>
+
+      <!-- Validation: Required -->
       <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('firstName')?.errors?.['required']">
         First Name is required.
       </div>
     </div>
 
-    <!-- Last Name -->
+    <!-- Last Name: required validation -->
     <div class="col-md-6 form-floating">
-      <input type="text" id="lastName" class="form-control rounded-3 shadow-sm"
-             formControlName="lastName" placeholder="Last Name"
+      <input type="text"
+             id="lastName"
+             class="form-control rounded-3 shadow-sm"
+             formControlName="lastName"
+             placeholder="Last Name"
              [ngClass]="{'is-invalid': submitted && employeeForm.get('lastName')?.invalid}">
       <label for="lastName">Last Name</label>
+
+      <!-- Validation: Required -->
       <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('lastName')?.errors?.['required']">
         Last Name is required.
       </div>
     </div>
 
-    <!-- Email -->
+    <!-- Email field: required + email format validation -->
     <div class="col-md-6 form-floating">
-      <input type="email" id="email" class="form-control rounded-3 shadow-sm"
-             formControlName="email" placeholder="Email"
+      <input type="email"
+             id="email"
+             class="form-control rounded-3 shadow-sm"
+             formControlName="email"
+             placeholder="Email"
              [ngClass]="{'is-invalid': submitted && employeeForm.get('email')?.invalid}">
       <label for="email">Email</label>
+
+      <!-- Validation: Required -->
       <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('email')?.errors?.['required']">
         Email is required.
       </div>
-      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('email')?.errors?.['email']">
+
+      <!-- Validation: Must match proper email format -->
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('email')?.errors?.['pattern']">
         Enter a valid email address.
       </div>
     </div>
 
-    <!-- Salary -->
+    <!-- Password field: required + toggle visibility with eye icon -->
+    <div class="col-md-6 form-floating position-relative">
+      <input [type]="showPassword ? 'text' : 'password'"
+             id="password"
+             class="form-control rounded-3 shadow-sm pe-5"
+             formControlName="password"
+             placeholder="Password"
+             [ngClass]="{'is-invalid': submitted && employeeForm.get('password')?.invalid}">
+      <label for="password">Password</label>
+
+      <!-- Password visibility toggle button (shown only when valid input exists) -->
+      <button *ngIf="employeeForm.get('password')?.value?.trim() && !employeeForm.get('password')?.invalid"
+              type="button"
+              class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-3 border-0 bg-transparent"
+              (click)="togglePasswordVisibility()">
+        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+      </button>
+
+      <!-- Validation: Required -->
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('password')?.errors?.['required']">
+        Password is required.
+      </div>
+
+      <!-- Optional: You can add pattern or min length validations in your TS form group -->
+      <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('password')?.errors?.['pattern']">
+        Enter a valid password (e.g., min 6 chars, 1 special character, etc.).
+      </div>
+    </div>
+
+    <!-- Salary field: required + minimum salary validation -->
     <div class="col-md-6 form-floating">
-      <input type="number" id="salary" class="form-control rounded-3 shadow-sm"
-             formControlName="salary" placeholder="Salary"
+      <input type="number"
+             id="salary"
+             class="form-control rounded-3 shadow-sm"
+             formControlName="salary"
+             placeholder="Salary"
              [ngClass]="{'is-invalid': submitted && employeeForm.get('salary')?.invalid}">
       <label for="salary">Salary</label>
+
+      <!-- Validation: Required -->
       <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('salary')?.errors?.['required']">
         Salary is required.
       </div>
+
+      <!-- Validation: Minimum value (e.g., 1000) -->
       <div class="invalid-feedback" *ngIf="submitted && employeeForm.get('salary')?.errors?.['min']">
         Salary must be at least ₹1000.
       </div>
     </div>
   </div>
 
-  <!-- Submit Button -->
+  <!-- Submit button: triggers (ngSubmit)="onSubmit()" -->
   <div class="d-grid mt-5">
     <button type="submit" class="btn btn-success btn-lg rounded-3 shadow-sm">
       <i class="bi bi-arrow-repeat me-2"></i>Update Employee
     </button>
   </div>
-
 </form>
-

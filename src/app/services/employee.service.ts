@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from '../models/Employee';
 
@@ -13,7 +13,7 @@ export class EmployeeService {
   constructor(private http: HttpClient) { }
 
   getAllEmployees(): Observable<Employee[]> {
-    return this.http.get<Employee[]>(baseUrl);
+    return this.http.get<Employee[]>(`${baseUrl}/`);
   }
 
   getEmployeeById(id:number):Observable<Employee>
@@ -23,7 +23,7 @@ export class EmployeeService {
 
   addEmployee(employee : Employee):Observable<Employee>
   {
-    return this.http.post<Employee>(baseUrl, employee);
+    return this.http.post<Employee>(`${baseUrl}/register`, employee);
   }
 
   deleteEmployeeById(id:number):Observable<String>

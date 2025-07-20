@@ -1,32 +1,43 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container-fluid">
-    <a class="navbar-brand fw-bold" routerLink="/">EmployeeApp</a>
-    <button
-      class="navbar-toggler"
-      type="button"
-    >
+    <a class="navbar-brand fw-bold" routerLink="home">EmployeeApp</a>
+    <button class="navbar-toggler" type="button">
       <span class="navbar-toggler-icon"></span>
     </button>
 
     <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
       <div class="d-flex gap-2">
-        <a
-          class="btn btn-outline-light"
-          routerLink="/add"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          Add Employee
-        </a>
-
-        <a
-          class="btn btn-outline-light"
-          routerLink="/"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="{ exact: true }"
-        >
-          List of Employees
-        </a>
+        <ng-container *ngIf="isLoggedIn(); else guestLinks">
+          <a
+            class="btn btn-outline-light"
+            routerLink="employees"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            List of Employees
+          </a>
+          <button class="btn btn-outline-light" (click)="logout()">
+            Logout
+          </button>
+        </ng-container>
+        <ng-template #guestLinks>
+          <a
+            class="btn btn-outline-light me-2"
+            routerLink="/login"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Login
+          </a>
+          <a
+            class="btn btn-outline-light"
+            routerLink="/add"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            Register
+          </a>
+        </ng-template>
       </div>
     </div>
   </div>

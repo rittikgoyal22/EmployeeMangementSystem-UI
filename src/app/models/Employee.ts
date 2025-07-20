@@ -3,5 +3,6 @@ export class Employee{
     firstName?:String;
     lastName?:String;
     email?:String;
+    password?:String;
     salary?:number;
 }

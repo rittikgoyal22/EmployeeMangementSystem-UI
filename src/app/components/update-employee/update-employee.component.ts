@@ -18,6 +18,7 @@ export class UpdateEmployeeComponent {
   employeeForm!: FormGroup;
   updatedEmployee!: Employee;
   submitted:boolean=false;
+  showPassword:boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +41,7 @@ export class UpdateEmployeeComponent {
         firstName: [this.employee.firstName, Validators.required],
         lastName: [this.employee.lastName, Validators.required],
         email: [this.employee.email, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        password: [this.employee.password, [Validators.required]],
         salary: [this.employee.salary, Validators.required],
       });
     });
@@ -52,8 +54,13 @@ export class UpdateEmployeeComponent {
       this.empService
         .updateEmployeeById(this.updatedEmployee.id, this.updatedEmployee)
         .subscribe((data) => {
-          this.router.navigate(['']);
+          this.router.navigate(['employees']);
         });
     }
+  }
+
+  togglePasswordVisibility()
+  {
+    this.showPassword = !this.showPassword;
   }
 }
