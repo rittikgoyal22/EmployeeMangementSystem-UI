@@ -2,7 +2,12 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from '../../services/employee.service';
 import { Employee } from '../../models/Employee';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -17,8 +22,8 @@ export class UpdateEmployeeComponent {
   employee!: Employee;
   employeeForm!: FormGroup;
   updatedEmployee!: Employee;
-  submitted:boolean=false;
-  showPassword:boolean = false;
+  submitted: boolean = false;
+  showPassword: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,18 +38,30 @@ export class UpdateEmployeeComponent {
   }
 
   loadEmployee(id: any): void {
-    this.empService.getEmployeeById(id).subscribe((data: Employee) => {
+    this.empService.getEmployeeById(id).subscribe({next: (data: Employee) => {
       this.employee = data;
 
       this.employeeForm = this.fb.group({
         id: [this.employee.id, [Validators.required]],
         firstName: [this.employee.firstName, Validators.required],
         lastName: [this.employee.lastName, Validators.required],
-        email: [this.employee.email, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+        email: [
+          this.employee.email,
+          [
+            Validators.required,
+            Validators.pattern(
+              /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            ),
+          ],
+        ],
         password: [this.employee.password, [Validators.required]],
         salary: [this.employee.salary, Validators.required],
       });
-    });
+    },
+    error:(err)=>{
+      console.log("Sorry, you are not authenticated for this feature.");
+    }
+  });
   }
 
   onSubmit(): void {
@@ -59,8 +76,7 @@ export class UpdateEmployeeComponent {
     }
   }
 
-  togglePasswordVisibility()
-  {
+  togglePasswordVisibility() {
     this.showPassword = !this.showPassword;
   }
 }
