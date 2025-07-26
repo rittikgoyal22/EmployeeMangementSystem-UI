@@ -1,0 +1,53 @@
+<form (ngSubmit)="login()"
+      class="container mt-5 p-5 shadow-lg rounded-4 bg-white border"
+      style="max-width: 600px;"
+      novalidate>
+
+  <h4 class="mb-4 fw-bold text-center text-primary">Login</h4>
+
+  <div class="row g-4">
+    <!-- Email -->
+    <div class="col-12 form-floating">
+      <input type="email"
+             id="email"
+             name="email"
+             class="form-control rounded-3 border-primary-subtle shadow-sm"
+             [(ngModel)]="credentials.email"
+             placeholder="Email"
+             required>
+      <label for="email">Email</label>
+    </div>
+
+    <!-- Password -->
+    <div class="col-12 form-floating position-relative">
+      <input [type]="showPassword ? 'text' : 'password'"
+             id="password"
+             name="password"
+             class="form-control rounded-3 border-primary-subtle shadow-sm"
+             [(ngModel)]="credentials.password"
+             placeholder="Password"
+             required>
+      <label for="password">Password</label>
+
+      <!-- Toggle eye icon -->
+      <button *ngIf="credentials.password"
+              type="button"
+              class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-3 border-0 bg-transparent"
+              (click)="showPassword = !showPassword">
+        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Error Message -->
+  <div *ngIf="errorMessage" class="text-danger mt-3 text-center">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Submit Button -->
+  <div class="d-grid mt-4">
+    <button type="submit" class="btn btn-primary btn-lg rounded-3 shadow-sm">
+      <i class="bi bi-box-arrow-in-right me-2"></i>Login
+    </button>
+  </div>
+</form>

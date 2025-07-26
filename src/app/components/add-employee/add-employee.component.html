@@ -1,0 +1,79 @@
+<form [formGroup]="empForm" (ngSubmit)="onSubmit()" novalidate
+      class="container mt-5 p-5 shadow-lg rounded-4 bg-white border"
+      style="max-width: 700px;">
+
+  <h4 class="mb-4 fw-bold text-center text-success">Employee Registration</h4>
+
+  <div class="row g-4">
+    <div class="col-md-6 form-floating">
+      <input type="text" id="fname" class="form-control rounded-3 border-primary-subtle shadow-sm"
+             formControlName="firstName" placeholder="First Name"
+             [ngClass]="{'is-invalid': submitted && empForm.get('firstName')?.invalid}">
+      <label for="fname">First Name</label>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('firstName')?.errors?.['required']">
+        First Name is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 form-floating">
+      <input type="text" id="lName" class="form-control rounded-3 border-primary-subtle shadow-sm"
+             formControlName="lastName" placeholder="Last Name"
+             [ngClass]="{'is-invalid': submitted && empForm.get('lastName')?.invalid}">
+      <label for="lName">Last Name</label>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('lastName')?.errors?.['required']">
+        Last Name is required.
+      </div>
+    </div>
+
+    <div class="col-md-6 form-floating">
+      <input type="email" id="email" class="form-control rounded-3 border-primary-subtle shadow-sm"
+             formControlName="email" placeholder="Email"
+             [ngClass]="{'is-invalid': submitted && empForm.get('email')?.invalid}">
+      <label for="email">Email</label>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('email')?.errors?.['required']">
+        Email is required.
+      </div>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('email')?.errors?.['pattern']">
+        Enter a valid email.
+      </div>
+    </div>
+
+    <div class="col-md-6 form-floating">
+      <input [type]="showPassword ? 'text' : 'password'" id="password" class="form-control rounded-3 border-primary-subtle shadow-sm"
+             formControlName="password" placeholder="Password"
+             [ngClass]="{'is-invalid': submitted && empForm.get('password')?.invalid}">
+      <label for="password">Password</label>
+      <button *ngIf="empForm.get('password')?.value && !empForm.get('password')?.invalid" type="button"
+          class="btn btn-sm position-absolute top-50 end-0 translate-middle-y me-3 border-0 bg-transparent"
+          (click)="togglePasswordVisibility()">
+        <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+      </button>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('password')?.errors?.['required']">
+        Password is required.
+      </div>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('password')?.errors?.['password']">
+        Enter a valid password.
+      </div>
+    </div>
+
+    <div class="col-md-6 form-floating">
+      <input type="number" id="salary" class="form-control rounded-3 border-primary-subtle shadow-sm"
+             formControlName="salary" placeholder="Salary"
+             [ngClass]="{'is-invalid': submitted && empForm.get('salary')?.invalid}">
+      <label for="salary">Salary</label>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('salary')?.errors?.['required']">
+        Salary is required.
+      </div>
+      <div class="invalid-feedback" *ngIf="submitted && empForm.get('salary')?.errors?.['min']">
+        Salary must be at least ₹1000.
+      </div>
+    </div>
+  </div>
+
+  <div class="d-grid mt-5">
+    <button type="submit" class="btn btn-success btn-lg rounded-3 shadow-sm">
+      <i class="bi bi-check-circle me-2"></i>Submit Form
+    </button>
+  </div>
+
+</form>
