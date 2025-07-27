@@ -1,4 +1,6 @@
-//docker-compose.yml
+//docker-compose.yml (File name)
+//docker-compose build --no-cache
+//docker compose up
 
 
 version: "3.8"
