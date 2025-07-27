@@ -1,27 +1,54 @@
-# EmployeeManagementSystemUI
+//remove all the blank lines
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.18.
 
-## Development server
+version: "3.8"
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+services:
 
-## Code scaffolding
+  mysql:
+  
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: Rittik@95174
+      MYSQL_DATABASE: employee_management_system
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ems-network
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+  backend:
+  
+    build: ./EmployeeMangementSystem
+    container_name: springboot-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/employee_management_system
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Rittik@95174
+    networks:
+      - ems-network
 
-## Build
+  frontend:
+  
+    build: ./EmployeeMangementSystem-UI
+    container_name: angular-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - ems-network
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+volumes:
 
-## Running unit tests
+  mysql_data:
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+networks:
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+  ems-network:
